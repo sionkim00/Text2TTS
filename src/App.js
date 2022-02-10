@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import Timer from "./components/Timer";
 import { useStopwatch } from "react-timer-hook";
+import { useSpeechSynthesis } from "react-speech-kit";
+
+import Timer from "./components/Timer";
 
 export default function App() {
   const [timers, setTimers] = useState([
@@ -11,11 +13,14 @@ export default function App() {
   const { seconds, isRunning, start, reset } = useStopwatch({
     autoStart: false
   });
+  const { speak, speaking } = useSpeechSynthesis();
+
   const maxTime = Math.max(...timers.map((t) => t.time), 0); //Find largest time
 
   useEffect(() => {
-    let findTimerOnTime = timers.find((t) => t.time === seconds);
-    console.log(findTimerOnTime);
+    let foundTimerOnTime = timers.find((t) => t.time === seconds);
+
+    if (foundTimerOnTime) speak({ text: foundTimerOnTime.text }); //TTS if corresponding timer object is found
 
     if (maxTime <= seconds) reset(new Date(), false); //End if out of bound
   }, [seconds]);
@@ -51,9 +56,12 @@ export default function App() {
       {/* Start/Stop button and isRunning */}
       <div>
         {isRunning ? (
-          <button onClick={() => reset(new Date(), false)}>
-            <i className="fa-solid fa-stop"></i>
-          </button>
+          <div>
+            <button onClick={() => reset(new Date(), false)}>
+              <i className="fa-solid fa-stop"></i>
+            </button>
+            {speaking && <p>Speaking...</p>}
+          </div>
         ) : (
           <button onClick={start}>
             <i className="fa-solid fa-play"></i>
