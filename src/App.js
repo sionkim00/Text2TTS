@@ -37,7 +37,7 @@ export default function App() {
 
   return (
     <div className="App">
-      <div className="py-10 px-10 bg-purple-700 min-h-screen font-mono">
+      <div className="py-10 px-10 bg-purple-700 min-h-screen font-mono flex flex-col items-center justify-center">
         <h1 className="text-purple-100 text-5xl font-bold mb-6">Text2TTS</h1>
 
         {/* timers */}
