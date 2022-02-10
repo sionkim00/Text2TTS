@@ -16,6 +16,7 @@ export default function Timer({ timer, i, updateTimer }) {
         value={time}
         onChange={(e) => setTime(parseInt(e.target.value))}
         onBlur={() => updateTimer(i, text, time)}
+        className="p-2 rounded-l-lg w-20 border-r-4 border-purple-100 outline-none"
       />
       <input
         type="text"
@@ -23,6 +24,7 @@ export default function Timer({ timer, i, updateTimer }) {
         value={text}
         onChange={(e) => setText(e.target.value)}
         onBlur={() => updateTimer(i, text, time)}
+        className="p-2 rounded-r-lg w-80 outline-none"
       />
     </form>
   );
